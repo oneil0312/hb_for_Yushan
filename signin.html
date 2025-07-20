@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入系統</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input:hover {
+            border-color: #ccc;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 38px;
+            cursor: pointer;
+            color: #666;
+            user-select: none;
+            font-size: 0.9rem;
+            padding: 5px;
+        }
+
+        .password-toggle:hover {
+            color: #667eea;
+        }
+
+        .remember-me {
+            margin-bottom: 25px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .remember-me label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+            width: auto;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e1e1;
+            z-index: 0;
+        }
+
+        .divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #fcc;
+            font-size: 0.9rem;
+            display: none;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .success-message {
+            background: #efe;
+            color: #363;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #cfc;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .input-error {
+            border-color: #c33 !important;
+            background: #fef5f5 !important;
+        }
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff40;
+            border-top: 2px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+            
+            .social-login {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>歡迎回來</h1>
+            <p>這些詩中隱藏了四種花，請取花的英文首字母組成密碼</p>
+            <div style="font-size: 0.8rem; color: #888; margin-top: 5px; line-height: 1.4;">
+                「折得一枝香在手，人間應未有。」<br>
+                「國色朝酣酒，天香夜染衣。」<br>
+                「子規夜半猶啼血，不信東風喚不回。」<br>
+                「夜來風雨聲，花落知多少。」
+            </div>
+        </div>
+
+        <div id="errorMessage" class="error-message"></div>
+        <div id="successMessage" class="success-message"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">帳號</label>
+                <input type="text" id="username" name="username" value="yushan0802" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">密碼</label>
+                <input type="password" id="password" name="password" placeholder="請根據詩句提示輸入英文字母密碼" required>
+                <span class="password-toggle" onclick="togglePassword()">👁️</span>
+            </div>
+
+            <div class="remember-me">
+                <label>
+                    <input type="checkbox" name="remember">
+                    記住我
+                </label>
+            </div>
+
+            <button type="submit" class="login-button" id="loginBtn">
+                <span class="button-text">登入</span>
+                <div class="loading">
+                    <div class="spinner"></div>
+                </div>
+            </button>
+        </form>
+
+
+    </div>
+
+    <script>
+        let isPasswordVisible = false;
+
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = document.querySelector('.password-toggle');
+            
+            if (isPasswordVisible) {
+                passwordInput.type = 'password';
+                toggleBtn.textContent = '👁️';
+            } else {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = '🙈';
+            }
+            isPasswordVisible = !isPasswordVisible;
+        }
+
+
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const loginBtn = document.getElementById('loginBtn');
+            const buttonText = loginBtn.querySelector('.button-text');
+            const loading = loginBtn.querySelector('.loading');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            
+            // 清除之前的錯誤狀態
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+            usernameInput.classList.remove('input-error');
+            passwordInput.classList.remove('input-error');
+            
+            // 顯示載入狀態
+            loginBtn.disabled = true;
+            buttonText.style.opacity = '0';
+            loading.style.display = 'block';
+            
+            // 模擬登入過程
+            setTimeout(() => {
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value.trim();
+                
+                // 檢查帳號和密碼
+                if (!username || !password) {
+                    errorMessage.textContent = '請填寫完整的登入資訊';
+                    errorMessage.style.display = 'block';
+                    if (!username) usernameInput.classList.add('input-error');
+                    if (!password) passwordInput.classList.add('input-error');
+                } else if (username !== 'yushan0802') {
+                    errorMessage.textContent = '帳號錯誤，請確認您的帳號';
+                    errorMessage.style.display = 'block';
+                    usernameInput.classList.add('input-error');
+                } else if (password !== 'rprb') {
+                    errorMessage.textContent = '密碼錯誤，請根據詩句提示重新輸入';
+                    errorMessage.style.display = 'block';
+                    passwordInput.classList.add('input-error');
+                } else {
+					successMessage.textContent = `登入成功！歡迎回來，${username}！`;
+					successMessage.style.display = 'block';
+
+					// 延遲 1 秒後跳轉到 index.html
+					setTimeout(() => {
+						window.location.href = 'index.html';
+					}, 1000);
+				}
+                
+                // 恢復按鈕狀態
+                loginBtn.disabled = false;
+                buttonText.style.opacity = '1';
+                loading.style.display = 'none';
+            }, 1500);
+        });
+
+        // 輸入框動畫效果
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('focused');
+            });
+        });
+
+        // 頁面載入動畫
+        window.addEventListener('load', function() {
+            document.querySelector('.login-container').style.opacity = '0';
+            document.querySelector('.login-container').style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                document.querySelector('.login-container').style.transition = 'all 0.5s ease';
+                document.querySelector('.login-container').style.opacity = '1';
+                document.querySelector('.login-container').style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
