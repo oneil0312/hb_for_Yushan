@@ -173,95 +173,112 @@
             }
         }
 
-        .reward-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            animation: slideIn 0.5s ease-out;
-            padding: 20px;
-        }
+		 .reward-screen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+			display: none;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			z-index: 1000;
+			animation: slideIn 0.5s ease-out;
+			padding: 30px 20px;
+			overflow: hidden;
+		}
 
-        .reward-screen.show {
-            display: flex;
-        }
+		.reward-screen.show {
+			display: flex;
+		}
 
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+		@keyframes slideIn {
+			from {
+				opacity: 0;
+				transform: translateY(20px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
 
-        .birthday-message {
-            text-align: center;
-            color: white;
-            margin-bottom: 30px;
-            animation: bounce 2s ease infinite;
-        }
+		.birthday-message {
+			text-align: center;
+			color: #fff5f5;
+			margin-bottom: 30px;
+			animation: bounce 2s ease infinite;
+			padding: 24px;
+			border-radius: 20px;
+			background: rgba(255, 255, 255, 0.1);
+			box-shadow: 0 8px 32px rgba(255, 105, 180, 0.25);
+			backdrop-filter: blur(14px);
+		}
 
-        .birthday-message h1 {
-            font-size: 28px;
-            margin-bottom: 8px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            line-height: 1.2;
-        }
+		.birthday-message h1 {
+			font-size: 32px;
+			margin-bottom: 12px;
+			text-shadow: 2px 2px 6px #ff69b4;
+			color: #fff5f5;
+		}
 
-        .birthday-message h2 {
-            font-size: 20px;
-            margin-bottom: 16px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
+		.birthday-message h2 {
+			font-size: 22px;
+			margin-bottom: 20px;
+			text-shadow: 1px 1px 4px #ff8dc0;
+			color: #ffffff;
+		}
 
-        .birthday-message p {
-            font-size: 16px;
-            line-height: 1.6;
-            max-width: 300px;
-            margin: 0 auto;
-        }
+		.birthday-message p {
+			font-size: 18px;
+			line-height: 1.8;
+			max-width: 320px;
+			margin: 0 auto;
+			color: #fffafc;
+		}
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-8px);
-            }
-            60% {
-                transform: translateY(-4px);
-            }
-        }
+		.birthday-message .emoji-top,
+		.birthday-message .emoji-bottom {
+			font-size: 40px;
+			margin: 10px 0;
+			animation: bounce 2s ease infinite;
+		}
 
-        .restart-btn {
-            padding: 12px 24px;
-            font-size: 16px;
-            background: linear-gradient(135deg, #ff69b4, #ffa0d6);
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255,105,180,0.4);
-            transition: transform 0.2s ease;
-            margin-top: 20px;
-            touch-action: manipulation;
-            font-weight: 600;
-            min-height: 44px; /* 確保觸控目標足夠大 */
-        }
+		@keyframes bounce {
+			0%, 20%, 50%, 80%, 100% {
+				transform: translateY(0);
+			}
+			40% {
+				transform: translateY(-8px);
+			}
+			60% {
+				transform: translateY(-4px);
+			}
+		}
 
-        .restart-btn:active {
-            transform: scale(0.95);
-        }
+		.restart-btn {
+			padding: 14px 28px;
+			font-size: 18px;
+			background: linear-gradient(135deg, #ff69b4, #ffa0d6);
+			color: white;
+			border: none;
+			border-radius: 30px;
+			cursor: pointer;
+			box-shadow: 0 6px 18px rgba(255,105,180,0.5);
+			transition: transform 0.2s ease, box-shadow 0.2s ease;
+			margin-top: 25px;
+			touch-action: manipulation;
+			font-weight: 700;
+			min-height: 50px;
+		}
+
+		.restart-btn:active {
+			transform: scale(0.95);
+			box-shadow: 0 4px 12px rgba(255,105,180,0.3);
+		}
+
 
         .confetti {
             position: absolute;
